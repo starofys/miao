@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #stime {
+            font-size: 40px;
+            font-family: Arial;
+            line-height: 34px;
+        }
+
+        #date {
+            font-size: 13px;
+            color: #666;
+            line-height: 18px;
+            text-align: center;
+        }
+
+        #bjt_info {
+            background: rgb(152, 152, 152);
+            width: 152px;
+        }
+    </style>
+</head>
+<body>
+<br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<div>倒计时<span id="time">5</span></div>
+<div id="div1">
+    <button class="sk-button">刷新抢宝</button>
+</div>
+<button id="start" onclick="ceshi()">开始测试</button>
+
+<!--<div style="z-index: 2000;font-size: 40px;font-family: Arial;line-height: 34px;position: fixed;top: 60px;left: 7px;">
+    <div id="stb_time" style="font-size: 40px;font-family: Arial;line-height: 34px;">17:03:41</div>
+</div>-->
+
+<script type="text/javascript">
+    function _(id) {
+        return document.getElementById(id);
+    }
+    var ceshilisener;
+    var time = _('time');
+    var div1 = _('div1');
+    function ceshi() {
+        var i = 5;
+        ceshilisener = setInterval(function() {
+            if(i == 0) {
+                clearInterval(ceshilisener);
+                div1.innerHTML = '<img class="question-img" src="http://img1.tbcdn.cn/tfscom/TB1W3cXGFXXXXcOXpXXq6xXFXXX">' +
+                '<input class="answer-input" type="text" />' +
+                '<input class="J_Submit" type="button" value="提交" onclick="tijiao()" />';
+            }
+            time.innerText = i--;
+        }, 1000);
+    }
+    function tijiao(){
+        console.log('jijiao   已经提交');
+    }
+
+</script>
+</body>
+</html>

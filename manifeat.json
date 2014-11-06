@@ -1,0 +1,31 @@
+{
+   "background": {
+      "scripts": [ "assets/js/base.js", "bg.js" ]
+   },
+   "browser_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.htm",
+      "default_title": "MIAO - 秒杀助手"
+   },
+   "content_scripts": [ {
+      "js": [ "assets/js/base.js", "miao.js" ],
+      "matches": [ "*://*.taobao.com/*", "*://*.tmall.com/*", "*://*.enjoyapps.org/miaotest.htm*" ],
+      "run_at": "document_end"
+   } ],
+   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+   "description": "有效缩减秒杀反应时间，优质秒杀推荐。支持淘宝、天猫秒杀。",
+   "homepage_url": "http://miao.enjoyapps.org/",
+   "icons": {
+      "128": "icon.png",
+      "16": "icon.png",
+      "48": "icon.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCliuXVCePXTdO7eiRw3eEs8kCThUgZAm+ZE4MILb3W0tALiOF3HjhYAAYYy5E61aFk6UVYuyN+QSLF6GN6+F3CcuQSMgrjF610uE/2awBcj2CPqTkTWIPu7H6OxEcX8DtmLF28ihg1QDlnmWRmOy2CsGqfPGUL5AOxSlZdlUXEhQIDAQAB",
+   "manifest_version": 2,
+   "name": "Miao - 秒杀助手",
+   "options_page": "options.htm",
+   "permissions": [ "tabs", "contextMenus", "notifications", "management", "http://*/*", "https://*/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.20",
+   "web_accessible_resources": [ "ico.png" ]
+}

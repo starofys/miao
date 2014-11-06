@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+
+  "name": "我的秒杀助手",
+  "description": "我的秒杀助手",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [ {
+    "js": [ "assets/js/showtime.js"],
+    "matches": [ "*://*.taobao.com/*", "*://*.tmall.com/*","*://localhost/*","file:///*"],
+    "run_at": "document_end"
+  } ],
+  "background": {
+    "page":"background.html"
+  },
+  "icons": {
+    "128": "128x128.ico",
+    "16": "48x48.ico",
+    "48": "64x64.ico"
+  },
+  "options_page": "options.html",
+  "permissions": [ "tabs", "contextMenus", "notifications", "management", "http://*/*", "https://*/*" ,"notifications"],
+  "web_accessible_resources": [ "icon.png" ]
+}

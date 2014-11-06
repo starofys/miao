@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <style type="text/css">
+        body{
+            min-width: 300px;
+        }
+        td{
+            outline: 1px dashed red;
+        }
+        .shop_img{
+            float: left;
+            line-height: 0;
+        }
+        #mian{
+            width: 300px;
+            max-height: 400px;
+            overflow-y: inherit;
+            overflow-x: hidden;
+            padding-right: 1px;
+            padding-left: 1px;
+        }
+        #mian li{
+            outline: 1px dashed red;
+            margin: 10px 0;
+        }
+        #mian li:after{
+            content: " ";
+            display: table;
+            clear: both;
+        }
+        #mian ul{
+            list-style: none;
+            padding-left: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+            font-size: 75%;
+        }
+        .mian_time{
+            text-align: center;
+            font-size: 14px;
+            color: red;
+            font-weight: bold;
+        }
+        .decfont{
+            color: gray;
+        }
+        .stime{
+            font-size: 16px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<h1>淘宝秒杀助手</h1>
+<button id="show">显示通知</button>
+<button id="resetTime">校准时间</button>
+<button id="getgoods">刷新商品</button>
+<div id="mian">
+    <ul id="shops">
+        <!--<li>时间：11:00-12:00</li>
+        <li>时间：11:00</li>
+        <li>
+            <div class="shop_img"><img src="http://img04.taobaocdn.com/bao/uploaded/i4/TB1cKEjFVXXXXbGXFXXXXXXXXXX_!!0-item_pic.jpg_220x220" width="80" height="80"></div>
+            <div>
+                <div>
+                    <a href="#">快乐一叮 DDZ-832A隔水电炖锅白瓷电炖盅一锅四胆煮粥煲汤锅BB煲</a>
+                    <p>秒杀价格:10</p>
+                </div>
+            </div>
+        </li>-->
+    </ul>
+</div>
+</body>
+<script src="assets/js/popup.js"></script>
+</html>

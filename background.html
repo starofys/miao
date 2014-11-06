@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>背景页</title>
+    <script type="text/javascript" src="assets/js/zepto.min.js"></script>
+</head>
+<body>
+<ul id="shopsdiv">
+
+</ul>
+<script id="tpl" type="text/template">
+    <li>开始时间：${startTimeStr}-->结束时间：${endTimeStr}</li>
+    {@each goods as it,index}
+            <li>秒杀开始时间：${it.timeStr}</li>
+    {@each it.data as shop,inde}
+            <li>
+                <div class="shop_img"><img src="${shop.img}" width="80" height="80"/></div>
+                <div>
+                    <div>
+                        <a href="${shop.link}">${shop.name}</a>
+                        <p>来自：${shop.from}--秒杀价格:${price}--商品价格：${shop.costPrice}</p>
+                    </div>
+                </div>
+            </li>
+    {@/each}
+    {@/each}
+</script>
+<script type="text/javascript" src="assets/js/background.js"></script>
+</body>
+</html>
