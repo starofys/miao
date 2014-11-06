@@ -164,7 +164,19 @@ function getShopHtml(){
 
 }
 var dhour=new Date();
+//循环此处 防止无限循环
+var count=0;
 function getShopData(hour){
+    //修复24小时获取消息造成无线循环
+    if(hour>23){
+        getShopData(0);
+    }
+    //限制只能循环24次
+    if(++count>24){
+        //重新计数
+        count=0;
+        return;
+    }
     console.log('正在获取'+hour+'点的商品信息');
     $.get('http://miaosha.taobao.com/index_data.htm?cb=%20&h='+hour,null,function(data){
         var d=/{([\s\S]*)}/.exec(data);
