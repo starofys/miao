@@ -10,7 +10,7 @@ var t=_('stb_time');//显示时间的节点
 var btnlisten=setInterval(btnlistener,350);//检测秒杀按钮的监听器，执行5次
 var cha;
 var sub=false;
-
+console.log('cookie'+document.cookie);
 chrome.extension.sendRequest({action: "getcha"}, function(response) {
     cha=response.cha;
     if(response.sub=='true'){
@@ -18,6 +18,15 @@ chrome.extension.sendRequest({action: "getcha"}, function(response) {
     }
     console.log('是否回车监听：'+sub);
 });
+/*
+$.get('http://ax.m.taobao.com/qst.htm?f=w&id=41327469204&uid=1614962331&r='+new Date().getTime(),null,function(da){
+    console.log(da);
+},'text');
+console.log($);
+console.log($.post);
+*/
+
+
 //执行时间显示
 setInterval(showtime,1000);
 
@@ -65,7 +74,8 @@ function submit(){
             console.log('注册监听');
             input[0].onkeydown = function(event) {
                 if (event.keyCode == 13 || event.keyCode == 32) {
-                    tijiaolisten=setInterval(submitlistener,400);
+                    //修改按键监听后提交表单
+                    tijiaolisten=setInterval(submitlistener,300);
                 }
             }
 

@@ -163,22 +163,38 @@ function getShopHtml(){
     }
 
 }
-var dhour=new Date();
+
+Date.prototype.Format = function (fmt) { //author: meizz
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if(/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for(var k in o)
+        if(new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 //循环此处 防止无限循环
 var count=0;
 function getShopData(hour){
     //修复24小时获取消息造成无线循环
     if(hour>23){
-        getShopData(0);
+        hour=0;
+        var dt=new Date();
+        dt.setDate(dt.getDate()+1);
+        stateInfo.day=dt.Format('yyyyMMdd');
     }
-    //限制只能循环24次
+    //执行次数大于24直接返回，防止无限循环
     if(++count>24){
-        //重新计数
-        count=0;
         return;
     }
     console.log('正在获取'+hour+'点的商品信息');
-    $.get('http://miaosha.taobao.com/index_data.htm?cb=%20&h='+hour,null,function(data){
+    $.get('http://miaosha.taobao.com/index_data.htm?cb=%20&d='+stateInfo.day+'&h='+hour,null,function(data){
         var d=/{([\s\S]*)}/.exec(data);
         if(d!=null&&d.length>0){
             var ttemp=JSON.parse(d[0]);
@@ -188,6 +204,8 @@ function getShopData(hour){
                 shopData=ttemp;
                 goods=shopData.goods;
                 initShopHtml(shopData);
+                //获取成功，重置次数
+                count=0;
                 //注册提醒
                 regTixing();
                 //保存商品
@@ -204,6 +222,7 @@ function getShopData(hour){
 
 //初始化配置
 function initConfig(){
+    var dhour=new Date();
     stateInfo=localStorage['stateInfo'];
     var t=localStorage['tixing']||5;
     tixing=Number(t);
@@ -213,7 +232,7 @@ function initConfig(){
         stateInfo=JSON.parse(localStorage['stateInfo']);
         //如果当前时间小于或者等于状态开始时间，说明数据有效直接从本地获取数据并且初始化html,否则重新获取商品并保存配置
         //console.log(stateInfo.startTime);
-        if(dhour.getHours()<=stateInfo.startTime){
+        if(dhour.getHours()<=stateInfo.startTime||stateInfo.day!=dhour.getDate()){
             var tmp=localStorage['shopData'];
             console.log('从本地获取数据');
             if(tmp){
@@ -227,6 +246,7 @@ function initConfig(){
         }
     }
     stateInfo={};
+    stateInfo.day=new Date().Format('yyyyMMdd');
     getShopData(dhour.getHours());
 }
 initConfig();

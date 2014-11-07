@@ -10,7 +10,7 @@
     "default_popup": "popup.html"
   },
   "content_scripts": [ {
-    "js": [ "assets/js/showtime.js"],
+    "js": [ "assets/js/zepto.min.js","assets/js/showtime.js"],
     "matches": [ "*://*.taobao.com/*", "*://*.tmall.com/*","*://localhost/*","file:///*"],
     "run_at": "document_end"
   } ],
