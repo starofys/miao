@@ -210,6 +210,7 @@ function getShopData(hour){
                 regTixing();
                 //保存商品
                 localStorage['shopData']=JSON.stringify(shopData);
+                stateInfo.date=new Date().getDate();
                 stateInfo.startTime=hour;
                 //保存配置项
                 localStorage['stateInfo']=JSON.stringify(stateInfo);
@@ -232,7 +233,7 @@ function initConfig(){
         stateInfo=JSON.parse(localStorage['stateInfo']);
         //如果当前时间小于或者等于状态开始时间，说明数据有效直接从本地获取数据并且初始化html,否则重新获取商品并保存配置
         //console.log(stateInfo.startTime);
-        if(dhour.getHours()<=stateInfo.startTime||stateInfo.day!=dhour.getDate()){
+        if(dhour.getHours()<=stateInfo.startTime||stateInfo.date>dhour.getDate()){
             var tmp=localStorage['shopData'];
             console.log('从本地获取数据');
             if(tmp){
