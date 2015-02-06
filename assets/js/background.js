@@ -12,7 +12,7 @@ function show() {
         body: 'Time to make the toast.'
     });
 }
-var cha;
+var cha=0;
 function getNewTime() {
     console.log('开始校时');
     var stime = new Date().getTime();
@@ -33,37 +33,16 @@ chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
         switch(request.action) {
             case 'getcha':
-                sendResponse({cha:cha,sub:localStorage['enterSubmit']});
+                sendResponse({cha:cha,sub:localStorage['enterSubmit']||'true'});
+                break;
+            case 'mtrue':
+                new Notification('卧槽，瞄到了', {
+                    icon: '128x128.ico',
+                    body: '哈哈哈哈哈哈哈哈哈'
+                });
                 break;
         }
     });
-
-//setInterval(show,2000);
-/*
- // Conditionally initialize the options.
- if(!localStorage.isInitialized) {
- localStorage.isActivated = true;   // The display activation.
- localStorage.frequency = 1;        // The display frequency, in minutes.
- localStorage.isInitialized = true; // The option initialization.
- }
- // Test for notification support.
- if(window.Notification) {
- // While activated, show notifications at the display frequency.
- if(JSON.parse(localStorage.isActivated)) {
- show();
- }
- var interval = 0; // The display interval, in minutes.
- setInterval(function() {
- interval++;
- if(
- JSON.parse(localStorage.isActivated) &&
- localStorage.frequency <= interval
- ) {
- show();
- interval = 0;
- }
- }, 60000);
- }*/
 var shopData;
 getNewTime();
 
@@ -124,7 +103,7 @@ var goods;
 function deleteShop(){
     goods.shift();
     if(goods.length==0){
-        getShopData(stateInfo.startTime+1);
+        getShopData(new Date().getHours()+1);
     }else{
         //重新初始化html
         initShopHtml(shopData);
@@ -178,7 +157,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
     for(var k in o)
         if(new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
-}
+};
 //循环此处 防止无限循环
 var count=0;
 function getShopData(hour){
@@ -210,15 +189,12 @@ function getShopData(hour){
                 regTixing();
                 //保存商品
                 localStorage['shopData']=JSON.stringify(shopData);
-                stateInfo.date=new Date().getDate();
-                stateInfo.startTime=hour;
+                stateInfo.startTime=new Date().setHours(hour);
                 //保存配置项
                 localStorage['stateInfo']=JSON.stringify(stateInfo);
             }
         }
     },'text');
-
-
 }
 
 //初始化配置
@@ -230,13 +206,13 @@ function initConfig(){
     if(stateInfo){
         console.log('解析配置');
         //解析配置
-        stateInfo=JSON.parse(localStorage['stateInfo']);
+        stateInfo=JSON.parse(stateInfo);
         //如果当前时间小于或者等于状态开始时间，说明数据有效直接从本地获取数据并且初始化html,否则重新获取商品并保存配置
         //console.log(stateInfo.startTime);
-        if(dhour.getHours()<=stateInfo.startTime||stateInfo.date>dhour.getDate()){
+        if(stateInfo.startTime&&stateInfo.startTime>dhour.getTime()){
             var tmp=localStorage['shopData'];
-            console.log('从本地获取数据');
             if(tmp){
+                console.log('从本地获取数据');
                 shopData=JSON.parse(tmp);
                 goods=shopData.goods;
                 initShopHtml(shopData);
